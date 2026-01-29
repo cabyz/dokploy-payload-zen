@@ -6,7 +6,8 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "build": "cross-env NODE_OPTIONS=--no-deprecation next build --experimental-build-mode compile && cross-env NODE_OPTIONS=--no-deprecation next build --experimental-build-mode generate-env",
+    "build": "pnpm generate:importmap && cross-env NODE_OPTIONS=--no-deprecation next build --experimental-build-mode compile && cross-env NODE_OPTIONS=--no-deprecation next build --experimental-build-mode generate-env",
+    "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
     "start": "cross-env NODE_OPTIONS=--no-deprecation next build --experimental-build-mode generate && cross-env NODE_OPTIONS=--no-deprecation next start",
     "dev": "cross-env NODE_OPTIONS=--no-deprecation next dev",
     "cms:build": "pnpm --filter @wlf/cms build",

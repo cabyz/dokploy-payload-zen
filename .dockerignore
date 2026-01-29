@@ -1,0 +1,41 @@
+# Prevent local build artifacts from leaking into Docker build context
+# This is CRITICAL to prevent the "White Screen of Death" (WSD) caused by
+# stale chunk hashes that mismatch between HTML and JS files
+
+# Build outputs (most important!)
+.next
+node_modules
+!node_modules/.cache
+
+# Git
+.git
+.gitignore
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# Testing
+coverage
+.playwright
+
+# Documentation (not needed in production image)
+docs/
+*.md
+!README.md
+
+# Monorepo apps (Dokploy builds from root src/)
+apps/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Misc
+.DS_Store
+*.pem
+.env*.local
