@@ -44,6 +44,23 @@ export default buildConfig({
     },
     user: Users.slug,
     livePreview: {
+      // Split-Head: LivePreview targets Cloudflare Pages frontend
+      url: ({ collectionConfig, globalConfig }) => {
+        // Use FRONTEND_URL for production preview, fallback to server URL for local dev
+        const baseUrl = process.env.FRONTEND_URL || getServerSideURL()
+
+        // Determine the path based on what we're previewing
+        if (collectionConfig) {
+          if (collectionConfig.slug === 'posts') {
+            return `${baseUrl}/posts`
+          }
+          if (collectionConfig.slug === 'pages') {
+            return baseUrl
+          }
+        }
+
+        return baseUrl
+      },
       breakpoints: [
         {
           label: 'Mobile',
@@ -72,7 +89,13 @@ export default buildConfig({
     url: process.env.DATABASE_URI || '',
   }),
   collections: [Pages, Posts, Media, Categories, Users],
-  cors: [getServerSideURL()].filter(Boolean),
+  // Split-Head CORS: Allow requests from Cloudflare Pages frontend
+  cors: [
+    getServerSideURL(),
+    process.env.FRONTEND_URL, // Cloudflare Pages frontend (www.wlf.com.mx)
+    'http://localhost:3000',  // Local development
+    'http://localhost:3001',  // Local frontend dev server
+  ].filter(Boolean) as string[],
   globals: [Header, Footer],
   plugins: [
     ...plugins,
