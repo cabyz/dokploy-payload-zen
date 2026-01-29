@@ -1,4 +1,12 @@
+import Link from 'next/link'
 import { getGlobals } from '@/lib/api'
+
+interface NavItem {
+    link?: {
+        url?: string
+        label?: string
+    }
+}
 
 export async function Footer() {
     // Fetch footer data from CMS API
@@ -12,14 +20,14 @@ export async function Footer() {
                         © {new Date().getFullYear()} WLF. All rights reserved.
                     </p>
                     <nav className="flex items-center gap-4">
-                        {footer?.navItems?.map((item: any, i: number) => (
-                            <a
+                        {footer?.navItems?.map((item: NavItem, i: number) => (
+                            <Link
                                 key={i}
                                 href={item.link?.url || '#'}
                                 className="text-sm text-gray-500 hover:text-gray-900"
                             >
                                 {item.link?.label}
-                            </a>
+                            </Link>
                         ))}
                     </nav>
                 </div>

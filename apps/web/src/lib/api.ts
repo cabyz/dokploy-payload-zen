@@ -10,6 +10,21 @@ interface FetchOptions {
     revalidate?: number
 }
 
+interface PaginatedResponse<T> {
+    docs: T[]
+    totalDocs?: number
+    page?: number
+}
+
+interface GlobalResponse {
+    navItems?: Array<{
+        link?: {
+            url?: string
+            label?: string
+        }
+    }>
+}
+
 export async function fetchFromCMS<T>(
     endpoint: string,
     options: FetchOptions = {}
@@ -50,21 +65,21 @@ export async function fetchFromCMS<T>(
 
 // Collection-specific fetchers
 export async function getPages(options?: FetchOptions) {
-    return fetchFromCMS<{ docs: any[] }>('pages', options)
+    return fetchFromCMS<PaginatedResponse<unknown>>('pages', options)
 }
 
 export async function getPage(slug: string, options?: FetchOptions) {
-    return fetchFromCMS<{ docs: any[] }>(`pages?where[slug][equals]=${slug}`, options)
+    return fetchFromCMS<PaginatedResponse<unknown>>(`pages?where[slug][equals]=${slug}`, options)
 }
 
 export async function getPosts(options?: FetchOptions) {
-    return fetchFromCMS<{ docs: any[] }>('posts', options)
+    return fetchFromCMS<PaginatedResponse<unknown>>('posts', options)
 }
 
 export async function getPost(slug: string, options?: FetchOptions) {
-    return fetchFromCMS<{ docs: any[] }>(`posts?where[slug][equals]=${slug}`, options)
+    return fetchFromCMS<PaginatedResponse<unknown>>(`posts?where[slug][equals]=${slug}`, options)
 }
 
 export async function getGlobals(slug: 'header' | 'footer', options?: FetchOptions) {
-    return fetchFromCMS<any>(`globals/${slug}`, options)
+    return fetchFromCMS<GlobalResponse>(`globals/${slug}`, options)
 }

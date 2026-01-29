@@ -40,7 +40,7 @@ export async function POST(req: NextRequest) {
             slug,
             timestamp: Date.now()
         })
-    } catch (error) {
+    } catch (_error) {
         return NextResponse.json(
             { error: 'Invalid request body' },
             { status: 400 }
