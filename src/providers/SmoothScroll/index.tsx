@@ -1,0 +1,26 @@
+'use client'
+
+import React from 'react'
+import { ReactLenis } from 'lenis/react'
+
+/**
+ * SmoothScrollProvider
+ * 
+ * Provides Lenis smooth scrolling with a cinematic, premium feel.
+ * Used in both CMS frontend and static frontend for consistency.
+ */
+export function SmoothScrollProvider({ children }: { children: React.ReactNode }) {
+    return (
+        <ReactLenis
+            root
+            options={{
+                lerp: 0.08,            // Smooth but responsive
+                duration: 1.2,          // Cinematic timing
+                smoothWheel: true,
+                easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            }}
+        >
+            {children}
+        </ReactLenis>
+    )
+}
