@@ -16,6 +16,24 @@ const nextConfig = {
           },
         ]
         : []),
+      // Cloudflare R2 custom domain for media storage
+      ...(process.env.R2_PUBLIC_ENDPOINT
+        ? [
+          {
+            hostname: new URL(process.env.R2_PUBLIC_ENDPOINT).hostname,
+            protocol: 'https',
+          },
+        ]
+        : []),
+      // R2 default endpoint (fallback)
+      ...(process.env.R2_ACCOUNT_ID
+        ? [
+          {
+            hostname: `${process.env.R2_ACCOUNT_ID}.r2.cloudflarestorage.com`,
+            protocol: 'https',
+          },
+        ]
+        : []),
       // Fallback for local development
       {
         hostname: 'localhost',
