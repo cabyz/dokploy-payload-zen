@@ -26,6 +26,9 @@
             "@/*": [
                 "./src/*"
             ],
+            "@/payload-types": [
+                "../../packages/types/generated-types"
+            ],
             "@wlf/types": [
                 "../../packages/types/generated-types"
             ]
