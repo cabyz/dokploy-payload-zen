@@ -1,9 +1,7 @@
 import type { Metadata } from 'next'
 import React from 'react'
-import { draftMode } from 'next/headers'
 
 import { getPageBySlug, getPages } from '@/lib/api'
-import { PageClient } from '@/components/PageClient'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { RenderHero } from '@/heros/RenderHero'
 import { generateMeta } from '@/utilities/generateMeta'
@@ -34,14 +32,10 @@ type Args = {
 
 export default async function Page({ params: paramsPromise }: Args) {
   const { slug = 'home' } = await paramsPromise
-  const { isEnabled: isDraftMode } = await draftMode()
 
-  // Fetch page with draft support when in draft mode
-  const page = await getPageBySlug(slug, {
-    revalidate: isDraftMode ? 0 : 60,
-    depth: 2,
-    draft: isDraftMode
-  })
+  // Static export - fetch at build time, cache for 60s
+  // For LivePreview, use the CMS domain (cms.wlf.com.mx)
+  const page = await getPageBySlug(slug, { revalidate: 60, depth: 2 })
 
   if (!page) {
     return (
@@ -52,12 +46,6 @@ export default async function Page({ params: paramsPromise }: Args) {
         </p>
       </div>
     )
-  }
-
-  // Use PageClient for LivePreview when in draft mode
-  // Otherwise render statically for better performance
-  if (isDraftMode) {
-    return <PageClient page={page} draft />
   }
 
   const { hero, layout } = page
@@ -76,3 +64,4 @@ export async function generateMetadata({ params: paramsPromise }: Args): Promise
 
   return generateMeta({ doc: page })
 }
+
