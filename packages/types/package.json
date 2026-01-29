@@ -1,0 +1,11 @@
+{
+    "name": "@wlf/types",
+    "version": "1.0.0",
+    "description": "Shared TypeScript types generated from Payload CMS",
+    "type": "module",
+    "main": "./generated-types.ts",
+    "types": "./generated-types.ts",
+    "exports": {
+        ".": "./generated-types.ts"
+    }
+}

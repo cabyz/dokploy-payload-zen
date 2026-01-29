@@ -1,0 +1,42 @@
+{
+    "name": "@wlf/cms",
+    "version": "1.0.0",
+    "description": "Payload CMS Admin + API",
+    "type": "module",
+    "scripts": {
+        "build": "cross-env NODE_OPTIONS=--no-deprecation next build --experimental-build-mode compile && cross-env NODE_OPTIONS=--no-deprecation next build --experimental-build-mode generate-env",
+        "dev": "cross-env NODE_OPTIONS=--no-deprecation next dev --port 3001",
+        "start": "cross-env NODE_OPTIONS=--no-deprecation next build --experimental-build-mode generate && cross-env NODE_OPTIONS=--no-deprecation next start",
+        "generate:types": "cross-env NODE_OPTIONS=--no-deprecation payload generate:types",
+        "schema:audit": "cross-env NODE_OPTIONS=--no-deprecation npx tsx scripts/schema-audit.ts"
+    },
+    "dependencies": {
+        "@payloadcms/db-mongodb": "3.59.1",
+        "@payloadcms/next": "3.59.1",
+        "@payloadcms/payload-cloud": "3.59.1",
+        "@payloadcms/plugin-form-builder": "3.59.1",
+        "@payloadcms/plugin-nested-docs": "3.59.1",
+        "@payloadcms/plugin-redirects": "3.59.1",
+        "@payloadcms/plugin-search": "3.59.1",
+        "@payloadcms/plugin-seo": "3.59.1",
+        "@payloadcms/storage-s3": "3.59.1",
+        "@payloadcms/richtext-lexical": "3.59.1",
+        "@payloadcms/ui": "3.59.1",
+        "cross-env": "^7.0.3",
+        "dotenv": "16.4.7",
+        "graphql": "^16.8.2",
+        "next": "15.4.4",
+        "payload": "3.59.1",
+        "react": "19.1.0",
+        "react-dom": "19.1.0",
+        "sharp": "0.34.2"
+    },
+    "devDependencies": {
+        "@types/node": "22.5.4",
+        "@types/react": "19.1.8",
+        "@types/react-dom": "19.1.6",
+        "tsx": "^4.19.2",
+        "typescript": "5.7.3",
+        "zod": "^3.23.8"
+    }
+}
