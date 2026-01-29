@@ -6,16 +6,15 @@
   "type": "module",
   "private": true,
   "scripts": {
+    "build": "cross-env NODE_OPTIONS=--no-deprecation next build --experimental-build-mode compile && cross-env NODE_OPTIONS=--no-deprecation next build --experimental-build-mode generate-env",
+    "start": "cross-env NODE_OPTIONS=--no-deprecation next build --experimental-build-mode generate && cross-env NODE_OPTIONS=--no-deprecation next start",
+    "dev": "cross-env NODE_OPTIONS=--no-deprecation next dev",
     "cms:build": "pnpm --filter @wlf/cms build",
     "cms:dev": "pnpm --filter @wlf/cms dev",
-    "cms:start": "pnpm --filter @wlf/cms start",
     "web:build": "pnpm --filter @wlf/web build",
     "web:dev": "pnpm --filter @wlf/web dev",
-    "web:start": "pnpm --filter @wlf/web start",
-    "dev": "pnpm --parallel --filter @wlf/* dev",
-    "build": "pnpm --filter @wlf/* build",
-    "generate:types": "pnpm --filter @wlf/cms generate:types && cp apps/cms/src/payload-types.ts packages/types/generated-types.ts",
-    "schema:audit": "pnpm --filter @wlf/cms schema:audit"
+    "generate:types": "cross-env NODE_OPTIONS=--no-deprecation payload generate:types",
+    "schema:audit": "cross-env NODE_OPTIONS=--no-deprecation npx tsx scripts/schema-audit.ts"
   },
   "dependencies": {
     "@payloadcms/admin-bar": "3.59.1",
