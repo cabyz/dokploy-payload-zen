@@ -1,6 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+    output: 'export',
+
+    // Static export requires unoptimized images or custom loader
     images: {
+        unoptimized: true,
         remotePatterns: [
             {
                 protocol: 'https',
@@ -12,15 +16,9 @@ const nextConfig = {
             },
         ],
     },
-    async rewrites() {
-        return [
-            // Proxy API requests to CMS
-            {
-                source: '/api/:path*',
-                destination: `${process.env.CMS_URL || 'http://localhost:3001'}/api/:path*`,
-            },
-        ]
-    },
+
+    // Trailing slash for static hosting
+    trailingSlash: true,
 }
 
 export default nextConfig
