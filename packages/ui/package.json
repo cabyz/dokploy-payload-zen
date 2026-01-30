@@ -1,0 +1,24 @@
+{
+    "name": "@wlf/ui",
+    "version": "1.0.0",
+    "description": "Shared UI components for WLF Split-Head architecture",
+    "type": "module",
+    "exports": {
+        ".": "./src/index.ts",
+        "./smooth-scroll": "./src/providers/SmoothScrollProvider.tsx",
+        "./scroll-reveal": "./src/components/ScrollReveal.tsx",
+        "./section": "./src/components/SovereignSection.tsx",
+        "./utils": "./src/utils.ts"
+    },
+    "dependencies": {
+        "lenis": "^1.3.17",
+        "framer-motion": "^12.29.2",
+        "gsap": "^3.14.2",
+        "clsx": "^2.1.1",
+        "tailwind-merge": "^2.3.0"
+    },
+    "peerDependencies": {
+        "react": "^19.0.0",
+        "react-dom": "^19.0.0"
+    }
+}
