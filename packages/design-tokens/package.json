@@ -1,0 +1,11 @@
+{
+    "name": "@wlf/design-tokens",
+    "version": "1.0.0",
+    "description": "WLF Design Tokens - Sovereign/Zen aesthetic",
+    "type": "module",
+    "exports": {
+        ".": "./src/index.ts",
+        "./base.css": "./src/base.css",
+        "./tokens": "./tokens.json"
+    }
+}

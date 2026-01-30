@@ -1,0 +1,245 @@
+/* 
+ * WLF DESIGN TOKENS - SOVEREIGN/ZEN AESTHETIC
+ * Based on zen-test clonar.ai Series A design
+ * Optimized for dark mode, premium feel
+ */
+
+@theme {
+    /* Core Colors (Zinc-950 Surface) */
+    --color-background: #09090b;
+    --color-foreground: #fafafa;
+    --color-card: #18181b;
+    --color-card-foreground: #fafafa;
+    --color-popover: #18181b;
+    --color-popover-foreground: #fafafa;
+    --color-primary: #fafafa;
+    --color-primary-foreground: #18181b;
+    --color-secondary: #27272a;
+    --color-secondary-foreground: #fafafa;
+    --color-muted: #27272a;
+    --color-muted-foreground: #a1a1aa;
+    --color-accent: #27272a;
+    --color-accent-foreground: #fafafa;
+    --color-destructive: #7f1d1d;
+    --color-destructive-foreground: #fafafa;
+    --color-border: #27272a;
+    --color-input: #27272a;
+    --color-ring: #d4d4d8;
+
+    /* Brand Tokens - WLF Sovereign */
+    --color-brand-indigo: #9B99FE;
+    --color-brand-mint: #2BC8B7;
+    --color-void: #050505;
+    --color-surface: #0E0E10;
+    --color-glass: rgba(255, 255, 255, 0.03);
+    --color-glass-border: rgba(255, 255, 255, 0.08);
+
+    /* Radius System (Apple Standards) */
+    --radius-sm: 8px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+    --radius-xl: 24px;
+    --radius-2xl: 32px;
+
+    /* Apple Easing & Kinetics */
+    --ease-snappy: cubic-bezier(0.2, 0, 0, 1);
+    --ease-apple: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-soft: cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-sovereign: cubic-bezier(0.23, 1, 0.32, 1);
+
+    /* Depth & Shadows (Ambient + Sharp) */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.05);
+    --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.12), 0 8px 16px rgba(0, 0, 0, 0.08);
+    --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.15), 0 15px 25px rgba(0, 0, 0, 0.1);
+
+    /* Typography Stack */
+    --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+    --font-mono: "SF Mono", "Menlo", "Monaco", "Courier New", monospace;
+
+    /* Lenis Smooth Scroll */
+    --lerp: 0.08;
+    --duration-cinematic: 1.2s;
+}
+
+@layer base {
+    * {
+        @apply border-border/60 outline-ring/30;
+    }
+
+    html {
+        @apply antialiased scroll-smooth;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+        @apply bg-background text-foreground;
+        font-family: var(--font-sans);
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        @apply font-semibold tracking-tight;
+    }
+
+    p {
+        @apply leading-relaxed;
+    }
+
+    /* Improved Touch/Click Kinetics */
+    button,
+    a {
+        @apply active:scale-[0.98] transition-all duration-200;
+    }
+}
+
+/* 
+ * KINETIC ANIMATIONS (Sovereign Spring)
+ */
+@keyframes kinetic-in {
+    from {
+        opacity: 0;
+        transform: scale(0.96) translateY(10px);
+        filter: blur(4px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+        filter: blur(0);
+    }
+}
+
+.animate-kinetic-in {
+    animation: kinetic-in 0.6s var(--ease-sovereign) forwards;
+}
+
+@keyframes spring-in {
+    0% {
+        opacity: 0;
+        transform: scale(0.96) translateY(12px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.animate-spring-in {
+    animation: spring-in 0.5s var(--ease-snappy) forwards;
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.animate-fade-in {
+    animation: fade-in 0.3s var(--ease-apple) forwards;
+}
+
+/* 
+ * GLASS PANELS (Performance Optimized)
+ */
+.glass-panel {
+    background-color: rgba(24, 24, 27, 0.95);
+    border: 1px solid rgba(39, 39, 42, 0.6);
+    box-shadow: var(--shadow-lg);
+}
+
+.glass-panel-blur {
+    background-color: rgba(24, 24, 27, 0.95);
+    border: 1px solid rgba(39, 39, 42, 0.6);
+    box-shadow: var(--shadow-lg);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+}
+
+/* 
+ * ATOMIC MOLECULES (Clonar Pattern)
+ */
+.atomic-popover {
+    border-radius: 16px;
+    border: 1px solid rgba(39, 39, 42, 0.6);
+    background-color: rgba(24, 24, 27, 0.95);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+}
+
+.atomic-modal {
+    background-color: rgba(9, 9, 11, 0.95);
+    border: 1px solid rgba(39, 39, 42, 0.6);
+    box-shadow: var(--shadow-xl);
+}
+
+@media (min-width: 640px) {
+    .atomic-modal {
+        border-radius: 16px;
+    }
+}
+
+.atomic-card-container {
+    box-shadow: var(--shadow-sm);
+    border: 1px solid rgba(39, 39, 42, 0.6);
+    background-color: rgba(24, 24, 27, 0.5);
+}
+
+/* 
+ * BACKGROUND PATTERNS (Subtle Grid)
+ */
+.bg-grid-subtle {
+    background-image:
+        linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 32px 32px;
+}
+
+.bg-dot-pattern {
+    background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 24px 24px;
+}
+
+/* 
+ * SCROLLBAR AESTHETICS (macOS style)
+ */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(39, 39, 42, 0.6);
+    border-radius: 9999px;
+    border: 3px solid transparent;
+    background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(63, 63, 70, 0.8);
+}
+
+/* 
+ * SOVEREIGN SECTIONS (Vertical Rhythm)
+ */
+.section-rhythm {
+    @apply py-16 md:py-32 lg:py-48;
+}
+
+.container-sovereign {
+    @apply container mx-auto px-6 md:px-12 lg:px-24 max-w-7xl;
+}

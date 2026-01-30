@@ -1,0 +1,41 @@
+{
+    "$schema": "https://turbo.build/schema.json",
+    "globalDependencies": [
+        "**/.env.*local",
+        ".env"
+    ],
+    "tasks": {
+        "build": {
+            "dependsOn": [
+                "^build"
+            ],
+            "outputs": [
+                "dist/**",
+                ".next/**",
+                "build/**"
+            ],
+            "env": [
+                "DATABASE_URI",
+                "PAYLOAD_SECRET",
+                "NEXT_PUBLIC_SERVER_URL"
+            ]
+        },
+        "dev": {
+            "cache": false,
+            "persistent": true
+        },
+        "lint": {
+            "outputs": []
+        },
+        "type-check": {
+            "dependsOn": [
+                "^build"
+            ],
+            "outputs": []
+        },
+        "ui:dev": {
+            "cache": false,
+            "persistent": true
+        }
+    }
+}
