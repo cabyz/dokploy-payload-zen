@@ -8,11 +8,18 @@ import { Content } from '../../blocks/Content/config'
 import { FormBlock } from '../../blocks/Form/config'
 import { MediaBlock } from '../../blocks/MediaBlock/config'
 import { PricingBlock } from '../../blocks/Pricing/config'
+// Landing Page Blocks (Sovereign Design System)
+import { HeroBlock } from '../../blocks/Hero/config'
+import { FeatureGridBlock } from '../../blocks/FeatureGrid/config'
+import { SocialProofBlock } from '../../blocks/SocialProof/config'
+import { FAQBlock } from '../../blocks/FAQ/config'
+import { TestimonialsBlock } from '../../blocks/Testimonials/config'
 import { hero } from '@/heros/config'
 import { slugField } from 'payload'
 import { populatePublishedAt } from '../../hooks/populatePublishedAt'
 import { generatePreviewPath } from '../../utilities/generatePreviewPath'
 import { revalidateDelete, revalidatePage } from './hooks/revalidatePage'
+
 
 import {
   MetaDescriptionField,
@@ -73,7 +80,21 @@ export const Pages: CollectionConfig<'pages'> = {
             {
               name: 'layout',
               type: 'blocks',
-              blocks: [CallToAction, Content, MediaBlock, Archive, FormBlock, PricingBlock],
+              blocks: [
+                // Core Blocks
+                CallToAction,
+                Content,
+                MediaBlock,
+                Archive,
+                FormBlock,
+                PricingBlock,
+                // Landing Page Blocks
+                HeroBlock,
+                FeatureGridBlock,
+                SocialProofBlock,
+                FAQBlock,
+                TestimonialsBlock,
+              ],
               required: true,
               admin: {
                 initCollapsed: true,

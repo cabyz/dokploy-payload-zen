@@ -191,7 +191,19 @@ export interface Page {
       | null;
     media?: (string | null) | Media;
   };
-  layout: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock | PricingBlock)[];
+  layout: (
+    | CallToActionBlock
+    | ContentBlock
+    | MediaBlock
+    | ArchiveBlock
+    | FormBlock
+    | PricingBlock
+    | HeroBlock
+    | FeatureGridBlock
+    | SocialProofBlock
+    | FAQBlock
+    | TestimonialsBlock
+  )[];
   meta?: {
     title?: string | null;
     /**
@@ -795,6 +807,226 @@ export interface PricingBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HeroBlock".
+ */
+export interface HeroBlock {
+  variant: 'fullBleed' | 'centered' | 'split';
+  /**
+   * Optional small text above headline (e.g., "New for 2026")
+   */
+  badge?: string | null;
+  /**
+   * Primary headline - keep it punchy
+   */
+  headline: string;
+  /**
+   * Supporting text that expands on the headline
+   */
+  subheadline?: string | null;
+  primaryCTA: {
+    label: string;
+    url: string;
+    style?: ('primary' | 'accent') | null;
+  };
+  secondaryCTA?: {
+    label?: string | null;
+    url?: string | null;
+  };
+  /**
+   * Quick trust builders (✓ 500+ clients)
+   */
+  proofPoints?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Background image or video
+   */
+  media?: (string | null) | Media;
+  backgroundStyle?: {
+    overlay?: ('gradient' | 'solid' | 'none') | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'hero';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FeatureGridBlock".
+ */
+export interface FeatureGridBlock {
+  /**
+   * Section headline (e.g., "Why Choose Us")
+   */
+  sectionTitle?: string | null;
+  /**
+   * Optional supporting text
+   */
+  sectionSubtitle?: string | null;
+  layout?: ('grid' | 'bento' | 'list') | null;
+  columns?: ('2' | '3' | '4') | null;
+  features?:
+    | {
+        icon:
+          | 'Zap'
+          | 'Target'
+          | 'Rocket'
+          | 'ShieldCheck'
+          | 'Gem'
+          | 'BarChart3'
+          | 'Sparkles'
+          | 'Settings'
+          | 'Users'
+          | 'DollarSign'
+          | 'Clock'
+          | 'Smartphone'
+          | 'Lock'
+          | 'Globe'
+          | 'Lightbulb'
+          | 'Palette';
+        /**
+         * Feature name (keep short)
+         */
+        title: string;
+        /**
+         * Brief explanation (1-2 sentences)
+         */
+        description?: string | null;
+        /**
+         * Card size in bento layout
+         */
+        size?: ('sm' | 'md' | 'lg') | null;
+        accentColor?: ('violet' | 'blue' | 'green' | 'amber' | 'rose') | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'featureGrid';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SocialProofBlock".
+ */
+export interface SocialProofBlock {
+  /**
+   * Text above the logos
+   */
+  label?: string | null;
+  variant?: ('scroll' | 'static' | 'fade') | null;
+  logos?:
+    | {
+        logo: string | Media;
+        /**
+         * Company name (for alt text)
+         */
+        name?: string | null;
+        /**
+         * Optional link to company
+         */
+        url?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  style?: {
+    /**
+     * Display logos in grayscale (more elegant)
+     */
+    grayscale?: boolean | null;
+    size?: ('sm' | 'md' | 'lg') | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'socialProof';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FAQBlock".
+ */
+export interface FAQBlock {
+  sectionTitle?: string | null;
+  /**
+   * Optional supporting text
+   */
+  sectionSubtitle?: string | null;
+  layout?: ('single' | 'double') | null;
+  items?:
+    | {
+        /**
+         * The question being asked
+         */
+        question: string;
+        /**
+         * The answer (supports basic markdown)
+         */
+        answer: string;
+        /**
+         * Show this item expanded by default
+         */
+        defaultOpen?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Optional call-to-action below FAQs
+   */
+  bottomCta?: {
+    enabled?: boolean | null;
+    text?: string | null;
+    buttonLabel?: string | null;
+    buttonUrl?: string | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'faq';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TestimonialsBlock".
+ */
+export interface TestimonialsBlock {
+  sectionTitle?: string | null;
+  sectionSubtitle?: string | null;
+  variant?: ('carousel' | 'grid' | 'featured') | null;
+  testimonials?:
+    | {
+        /**
+         * The testimonial text
+         */
+        quote: string;
+        author: {
+          name: string;
+          /**
+           * Job title (e.g., "CEO")
+           */
+          title?: string | null;
+          company?: string | null;
+          avatar?: (string | null) | Media;
+        };
+        /**
+         * Star rating (1-5)
+         */
+        rating?: number | null;
+        /**
+         * Show this testimonial prominently
+         */
+        featured?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  style?: {
+    showRatings?: boolean | null;
+    showAvatars?: boolean | null;
+    cardStyle?: ('glass' | 'solid' | 'outline') | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'testimonials';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -1085,6 +1317,11 @@ export interface PagesSelect<T extends boolean = true> {
         archive?: T | ArchiveBlockSelect<T>;
         formBlock?: T | FormBlockSelect<T>;
         pricing?: T | PricingBlockSelect<T>;
+        hero?: T | HeroBlockSelect<T>;
+        featureGrid?: T | FeatureGridBlockSelect<T>;
+        socialProof?: T | SocialProofBlockSelect<T>;
+        faq?: T | FAQBlockSelect<T>;
+        testimonials?: T | TestimonialsBlockSelect<T>;
       };
   meta?:
     | T
@@ -1209,6 +1446,150 @@ export interface PricingBlockSelect<T extends boolean = true> {
         ctaUrl?: T;
         highlighted?: T;
         id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HeroBlock_select".
+ */
+export interface HeroBlockSelect<T extends boolean = true> {
+  variant?: T;
+  badge?: T;
+  headline?: T;
+  subheadline?: T;
+  primaryCTA?:
+    | T
+    | {
+        label?: T;
+        url?: T;
+        style?: T;
+      };
+  secondaryCTA?:
+    | T
+    | {
+        label?: T;
+        url?: T;
+      };
+  proofPoints?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  media?: T;
+  backgroundStyle?:
+    | T
+    | {
+        overlay?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FeatureGridBlock_select".
+ */
+export interface FeatureGridBlockSelect<T extends boolean = true> {
+  sectionTitle?: T;
+  sectionSubtitle?: T;
+  layout?: T;
+  columns?: T;
+  features?:
+    | T
+    | {
+        icon?: T;
+        title?: T;
+        description?: T;
+        size?: T;
+        accentColor?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SocialProofBlock_select".
+ */
+export interface SocialProofBlockSelect<T extends boolean = true> {
+  label?: T;
+  variant?: T;
+  logos?:
+    | T
+    | {
+        logo?: T;
+        name?: T;
+        url?: T;
+        id?: T;
+      };
+  style?:
+    | T
+    | {
+        grayscale?: T;
+        size?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FAQBlock_select".
+ */
+export interface FAQBlockSelect<T extends boolean = true> {
+  sectionTitle?: T;
+  sectionSubtitle?: T;
+  layout?: T;
+  items?:
+    | T
+    | {
+        question?: T;
+        answer?: T;
+        defaultOpen?: T;
+        id?: T;
+      };
+  bottomCta?:
+    | T
+    | {
+        enabled?: T;
+        text?: T;
+        buttonLabel?: T;
+        buttonUrl?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TestimonialsBlock_select".
+ */
+export interface TestimonialsBlockSelect<T extends boolean = true> {
+  sectionTitle?: T;
+  sectionSubtitle?: T;
+  variant?: T;
+  testimonials?:
+    | T
+    | {
+        quote?: T;
+        author?:
+          | T
+          | {
+              name?: T;
+              title?: T;
+              company?: T;
+              avatar?: T;
+            };
+        rating?: T;
+        featured?: T;
+        id?: T;
+      };
+  style?:
+    | T
+    | {
+        showRatings?: T;
+        showAvatars?: T;
+        cardStyle?: T;
       };
   id?: T;
   blockName?: T;
