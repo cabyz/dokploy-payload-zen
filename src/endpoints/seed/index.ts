@@ -10,6 +10,11 @@ import { post1 } from './post-1'
 import { post2 } from './post-2'
 import { post3 } from './post-3'
 
+// Landing Page Templates
+import { landingSaas } from './landing-saas'
+import { landingAgency } from './landing-agency'
+import { landingConsulting } from './landing-consulting'
+
 const collections: CollectionSlug[] = [
   'categories',
   'media',
@@ -202,6 +207,7 @@ export const seed = async ({
 
   payload.logger.info(`— Seeding pages...`)
 
+  // Seed home and contact pages
   const [_, contactPage] = await Promise.all([
     payload.create({
       collection: 'pages',
@@ -212,6 +218,30 @@ export const seed = async ({
       collection: 'pages',
       depth: 0,
       data: contactPageData({ contactForm: contactForm }),
+    }),
+  ])
+
+  // Seed landing page templates (for design review)
+  payload.logger.info(`— Seeding landing page templates...`)
+
+  await Promise.all([
+    payload.create({
+      collection: 'pages',
+      depth: 0,
+      context: { disableRevalidate: true },
+      data: landingSaas({ heroImage: imageHomeDoc, metaImage: image2Doc }),
+    }),
+    payload.create({
+      collection: 'pages',
+      depth: 0,
+      context: { disableRevalidate: true },
+      data: landingAgency({ heroImage: imageHomeDoc, metaImage: image2Doc }),
+    }),
+    payload.create({
+      collection: 'pages',
+      depth: 0,
+      context: { disableRevalidate: true },
+      data: landingConsulting({ heroImage: imageHomeDoc, metaImage: image2Doc }),
     }),
   ])
 
