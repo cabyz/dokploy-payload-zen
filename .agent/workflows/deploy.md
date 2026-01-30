@@ -6,14 +6,29 @@ description: Deploy PayloadCMS to Dokploy - Verified workflow to prevent white s
 
 This workflow ensures a clean, working deployment without the white screen issue.
 
-## Prerequisites Checklist
+## 🚀 Auto-Deploy (Recommended)
+
+After setting up GitHub Secrets, push to main and GitHub Actions will auto-deploy:
+
+```bash
+git push origin main
+# GitHub Actions → SSH to Dokploy → Build → Deploy
+```
+
+**Required GitHub Secrets:**
+- `DOKPLOY_HOST` - 143.198.49.232
+- `DOKPLOY_SSH_KEY` - SSH private key for root@dokploy
+- `PAYLOAD_SECRET` - Your Payload secret
+- `DATABASE_URI` - MongoDB connection string
+
+## 📋 Manual Deployment (Fallback)
+
+### Prerequisites Checklist
 
 Before deploying, verify these files exist in your repo:
 - [ ] `.dockerignore` with `.next` and `node_modules`
 - [ ] `package.json` has `generate:importmap` in the build script
 - [ ] `Dockerfile` passes build-time args for `NEXT_PUBLIC_SERVER_URL`
-
-## Deployment Steps
 
 ### 1. Verify Local Code
 ```bash
@@ -27,6 +42,7 @@ git log --oneline -1  # Note the commit hash
 ```bash
 git push origin main
 ```
+
 
 ### 3. SSH to Dokploy VPS and Update Code
 ```bash

@@ -1,0 +1,51 @@
+name: Deploy to Dokploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy-cms:
+    name: Deploy CMS to Dokploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Deploy to Dokploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.DOKPLOY_HOST }}
+          username: root
+          key: ${{ secrets.DOKPLOY_SSH_KEY }}
+          script: |
+            cd /etc/dokploy/applications/payload-cms-uk3xw9/code
+            git fetch origin
+            git reset --hard origin/main
+            
+            # Build with all required args
+            docker build -t payload-cms-uk3xw9:latest \
+              --build-arg NEXT_PUBLIC_SERVER_URL=https://cms.wlf.com.mx \
+              --build-arg PAYLOAD_SECRET=${{ secrets.PAYLOAD_SECRET }} \
+              --build-arg DATABASE_URI='${{ secrets.DATABASE_URI }}' .
+            
+            # Update service
+            docker service update --force --image payload-cms-uk3xw9:latest payload-cms-uk3xw9
+            docker service scale payload-cms-uk3xw9=1
+            
+            echo "✅ CMS deployed successfully!"
+
+  trigger-frontend:
+    name: Trigger Frontend Rebuild
+    runs-on: ubuntu-latest
+    needs: deploy-cms
+    if: success()
+    steps:
+      - name: Trigger Cloudflare Pages Deploy Hook
+        run: |
+          # Cloudflare Pages auto-deploys from GitHub, but we can also
+          # trigger manually via deploy hook if configured
+          echo "Frontend will auto-deploy from Cloudflare Pages GitHub integration"
+          # Uncomment below if you have a deploy hook:
+          # curl -X POST "${{ secrets.CLOUDFLARE_DEPLOY_HOOK }}"
