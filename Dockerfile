@@ -41,6 +41,17 @@ ENV PAYLOAD_SECRET=${PAYLOAD_SECRET}
 ARG DATABASE_URI
 ENV DATABASE_URI=${DATABASE_URI}
 
+# CRITICAL: Generate ImportMap BEFORE build to prevent admin panel white screen
+RUN \
+  if [ -f yarn.lock ]; then yarn run generate:importmap; \
+  elif [ -f package-lock.json ]; then npm run generate:importmap; \
+  elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm run generate:importmap; \
+  else echo "Lockfile not found." && exit 1; \
+  fi
+
+# Clear any stale .next cache
+RUN rm -rf .next
+
 RUN \
   if [ -f yarn.lock ]; then yarn run build; \
   elif [ -f package-lock.json ]; then npm run build; \
