@@ -122,16 +122,18 @@ async function ignite() {
         // ─────────────────────────────────────────────────────────────────────────
         log(1, TOTAL_STEPS, "Creating Project...");
 
-        const project = await client.project.create({
+        const projectResponse = await client.project.create({
             name: CONFIG.projectName,
             description: CONFIG.projectDescription,
             env: "",
         });
 
-        const projectId = project.projectId;
-        const environmentId = project.environments?.[0]?.environmentId;
+        // Response structure: { project: {...}, environment: {...} }
+        const projectId = projectResponse.project?.projectId;
+        const environmentId = projectResponse.environment?.environmentId;
 
         if (!projectId || !environmentId) {
+            console.error("Response:", JSON.stringify(projectResponse, null, 2));
             throw new Error("Project creation returned invalid response - missing IDs");
         }
 
@@ -211,20 +213,25 @@ async function ignite() {
         // ─────────────────────────────────────────────────────────────────────────
         log(5, TOTAL_STEPS, "Configuring Git & Build Settings...");
 
-        // Configure GitHub provider
-        await client.application.saveGitProdiver({
+        // Configure Git source using direct URL (no OAuth required)
+        // IMPORTANT: saveGitProdiver requires GitHub OAuth to be linked in Dokploy UI
+        // We use application.update with customGitUrl to bypass this requirement
+        await client.application.update({
             applicationId: applicationId,
-            repository: CONFIG.githubRepo,
-            branch: CONFIG.branch,
-            buildPath: "/",
+            customGitUrl: `https://github.com/cabyz/${CONFIG.githubRepo}.git`,
+            customGitBranch: CONFIG.branch,
+            customGitBuildPath: "/",
+            sourceType: "git", // Use "git" not "github" to avoid OAuth requirement
         });
-        success(`Git provider configured: ${CONFIG.githubRepo}@${CONFIG.branch}`);
+        success(`Git source configured: https://github.com/cabyz/${CONFIG.githubRepo}.git@${CONFIG.branch}`);
 
         // Set build type to Dockerfile (not nixpacks)
         await client.application.saveBuildType({
             applicationId: applicationId,
             buildType: "dockerfile",
             dockerfile: "/Dockerfile",
+            dockerBuildStage: "",      // No specific stage
+            dockerContextPath: "",     // Use root context
         });
         success(`Build type set to: Dockerfile`);
 
