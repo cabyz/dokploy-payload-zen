@@ -1,0 +1,35 @@
+# Dependencies
+node_modules
+
+# Build artifacts (CRITICAL: prevents chunk hash mismatch)
+.next
+out
+dist
+
+# Git
+.git
+.gitignore
+
+# Development files
+*.log
+*.local
+.env*.local
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# Testing
+coverage
+.playwright
+
+# Misc
+.DS_Store
+Thumbs.db
+
+# Deployment scripts (not needed in container)
+ignite*.ts
+fix_mongo.ts
+DEPLOY.md

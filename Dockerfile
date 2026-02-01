@@ -30,15 +30,15 @@ COPY . .
 # Uncomment the following line in case you want to disable telemetry during the build.
 # ENV NEXT_TELEMETRY_DISABLED 1
 
-# CRITICAL: Pass build-time environment variables
-# These are required for next.config.js and the generate-env build phase
-ARG NEXT_PUBLIC_SERVER_URL
+# CRITICAL: Pass build-time environment variables with defaults
+# These placeholders allow the build to succeed without a live database
+ARG NEXT_PUBLIC_SERVER_URL="http://localhost:3000"
 ENV NEXT_PUBLIC_SERVER_URL=${NEXT_PUBLIC_SERVER_URL}
 
-ARG PAYLOAD_SECRET
+ARG PAYLOAD_SECRET="build-time-placeholder-secret"
 ENV PAYLOAD_SECRET=${PAYLOAD_SECRET}
 
-ARG DATABASE_URI
+ARG DATABASE_URI="mongodb://localhost:27017/build-placeholder"
 ENV DATABASE_URI=${DATABASE_URI}
 
 # CRITICAL: Generate ImportMap BEFORE build to prevent admin panel white screen

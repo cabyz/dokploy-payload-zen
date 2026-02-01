@@ -48,6 +48,16 @@ const nextConfig = {
       '.mjs': ['.mts', '.mjs'],
     }
 
+    // CRITICAL: Use contenthash instead of chunkhash for deterministic builds
+    // Prevents 404 errors on static chunks after redeployment
+    // See: https://github.com/vercel/next.js/issues/65856
+    if (webpackConfig.output?.chunkFilename) {
+      webpackConfig.output.chunkFilename = webpackConfig.output.chunkFilename.replace(
+        '[chunkhash]',
+        '[contenthash]'
+      )
+    }
+
     return webpackConfig
   },
   reactStrictMode: true,
